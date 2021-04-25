@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Authentication.Exchange</PackageProjectUrl>
     <DocumentationFile>Penguin.Authentication.Exchange.xml</DocumentationFile>
-    <Version>1.0.0</Version>
+    <Version>5.0.5</Version>
     <AssemblyName>Penguin.Authentication.Exchange</AssemblyName>
     <RootNamespace>Penguin.Authentication.Exchange</RootNamespace>
     <Description>Not Available</Description>
