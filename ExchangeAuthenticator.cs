@@ -1,10 +1,7 @@
-﻿using Microsoft.Exchange.WebServices.Autodiscover;
-using Microsoft.Exchange.WebServices.Data;
+﻿using Microsoft.Exchange.WebServices.Data;
 using Penguin.Authentication.Abstractions;
 using Penguin.Authentication.Abstractions.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Penguin.Authentication.Exchange
@@ -22,7 +19,8 @@ namespace Penguin.Authentication.Exchange
         {
             Endpoint = endpoint;
         }
-        static bool RedirectionCallback(string url)
+
+        private static bool RedirectionCallback(string url)
         {
             // Return true if the URL is an HTTPS URL.
             return url.ToLower().StartsWith("https://");
@@ -35,7 +33,7 @@ namespace Penguin.Authentication.Exchange
                 Credentials = new WebCredentials(Username, Password)
             };
 
-            
+
 
             try
             {
@@ -43,11 +41,12 @@ namespace Penguin.Authentication.Exchange
                 {
                     service.AutodiscoverUrl(Username, RedirectionCallback);
                     Endpoint = service.Url;
-                } else
+                }
+                else
                 {
                     service.Url = Endpoint;
                 }
-                
+
                 FindFoldersResults findFolderResults = await service.FindFolders(WellKnownFolderName.Root, new SearchFilter.IsGreaterThan(FolderSchema.TotalCount, 0), new FolderView(10));
 
                 return new AuthenticationResult()
@@ -55,13 +54,13 @@ namespace Penguin.Authentication.Exchange
                     IsValid = true
                 };
             }
-            catch(ServiceRequestException srex) when (srex.Message.Contains("(401)"))
+            catch (ServiceRequestException srex) when (srex.Message.Contains("(401)"))
             {
                 return new AuthenticationResult()
                 {
                     IsValid = false
                 };
-            } 
+            }
             catch (Exception ex)
             {
                 return new AuthenticationResult()
