@@ -26,20 +26,19 @@ namespace Penguin.Authentication.Exchange
             return url.ToLower().StartsWith("https://");
         }
 
-        public async Task<AuthenticationResult> Authenticate(string Username, string Password)
+        public async Task<AuthenticationResult> Authenticate(string username, string password)
         {
             ExchangeService service = new ExchangeService
             {
-                Credentials = new WebCredentials(Username, Password)
+                Credentials = new WebCredentials(username, password),
+                TraceEnabled = true
             };
-
-
 
             try
             {
                 if (Endpoint is null)
                 {
-                    service.AutodiscoverUrl(Username, RedirectionCallback);
+                    service.AutodiscoverUrl(username, RedirectionCallback);
                     Endpoint = service.Url;
                 }
                 else
