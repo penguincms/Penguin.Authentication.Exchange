@@ -20,9 +20,11 @@ namespace Penguin.Authentication.Exchange
             Endpoint = endpoint;
         }
 
-        private static bool RedirectionCallback(string url) =>
+        private static bool RedirectionCallback(string url)
+        {
             // Return true if the URL is an HTTPS URL.
-            url.ToLower().StartsWith("https://");
+            return url.ToLower().StartsWith("https://");
+        }
 
         public async Task<AuthenticationResult> Authenticate(string username, string password)
         {
