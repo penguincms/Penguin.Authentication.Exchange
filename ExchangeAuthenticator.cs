@@ -12,7 +12,6 @@ namespace Penguin.Authentication.Exchange
 
         public ExchangeAuthenticator()
         {
-
         }
 
         public ExchangeAuthenticator(Uri endpoint)
@@ -23,14 +22,14 @@ namespace Penguin.Authentication.Exchange
         private static bool RedirectionCallback(string url)
         {
             // Return true if the URL is an HTTPS URL.
-            return url.ToLower().StartsWith("https://");
+            return url.ToLower(System.Globalization.CultureInfo.CurrentCulture).StartsWith("https://");
         }
 
-        public async Task<AuthenticationResult> Authenticate(string username, string password)
+        public async Task<AuthenticationResult> Authenticate(string Username, string Password)
         {
-            ExchangeService service = new ExchangeService
+            ExchangeService service = new()
             {
-                Credentials = new WebCredentials(username, password),
+                Credentials = new WebCredentials(Username, Password),
                 TraceEnabled = true
             };
 
@@ -38,7 +37,7 @@ namespace Penguin.Authentication.Exchange
             {
                 if (Endpoint is null)
                 {
-                    service.AutodiscoverUrl(username, RedirectionCallback);
+                    service.AutodiscoverUrl(Username, RedirectionCallback);
                     Endpoint = service.Url;
                 }
                 else
@@ -46,7 +45,7 @@ namespace Penguin.Authentication.Exchange
                     service.Url = Endpoint;
                 }
 
-                FindFoldersResults findFolderResults = await service.FindFolders(WellKnownFolderName.Root, new SearchFilter.IsGreaterThan(FolderSchema.TotalCount, 0), new FolderView(10));
+                FindFoldersResults findFolderResults = await service.FindFolders(WellKnownFolderName.Root, new SearchFilter.IsGreaterThan(FolderSchema.TotalCount, 0), new FolderView(10)).ConfigureAwait(false);
 
                 return new AuthenticationResult()
                 {
