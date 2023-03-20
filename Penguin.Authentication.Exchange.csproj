@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net7.0</TargetFrameworks>
-    <PackageProjectUrl>https://github.com/PenguinCMS/Penguin.Authentication.Exchange</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/PenguinCms/Penguin.Authentication.Exchange</PackageProjectUrl>
     <DocumentationFile>Penguin.Authentication.Exchange.xml</DocumentationFile>
     <Version>5.0.5</Version>
     <AssemblyName>Penguin.Authentication.Exchange</AssemblyName>
